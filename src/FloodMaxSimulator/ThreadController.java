@@ -21,14 +21,16 @@ public class ThreadController extends Thread{
   boolean isAlive;
   int maxSeenSofar;
   boolean startNode;
-  Set uid = new HashSet();
+  int leader;
+ private Object lock = new Object();
+  Set<Integer> nodesUnderMe = Collections.synchronizedSet(new HashSet<Integer>(100));
+  Set<Integer> receivedUIDs = new HashSet<Integer>(100);
   HashMap<Integer, ThreadController> neighbours = new HashMap<Integer, ThreadController>();
-  HashMap<Integer,Boolean> childStatus = new HashMap<Integer,Boolean>();
+  HashMap<Integer,Boolean> activeChildren = new HashMap<Integer,Boolean>();
   HashMap<Integer, ThreadController> children = new HashMap<Integer, ThreadController>();
   ThreadController parent;
 
   BlockingQueue<MessagePassing> messageQueue = new ArrayBlockingQueue<MessagePassing>(100, true);
-  //BlockingQueue<MessagePassing> messageQueue1 = new ArrayBlockingQueue<MessagePassing>(100, true);
 
   ThreadController(int threadID) {
     this.threadID = threadID;
@@ -37,45 +39,83 @@ public class ThreadController extends Thread{
   }
 
   public void sendMessage(ThreadController receiver, boolean ACK, boolean terminate, boolean COMM, int UID, boolean parent) {
+    //System.out.println("sending " + UID + " to " + receiver.threadID);
     MessagePassing message = new MessagePassing(ACK, terminate, COMM, UID, parent, this.threadID);
-    //System.out.println("sending message to " + receiver.threadID);
     receiver.messageQueue.add(message);
+  }
+
+  public int countActiveChildren() {
+    return this.activeChildren.size();
   }
 
   public void run() {
     try {
-      while (true) {                                                //send uid   --- children hashmap (id,obj   )
-                                                                    //hashmap childstatus (id true)
-                                                                    //ack ter 0         ;;;; every uid 0  comm=true uid set
-        sleep(4000);
+      while (true) {
+        sleep(500);
         Iterator iterator = neighbours.entrySet().iterator();
         while (iterator.hasNext()) {
           Map.Entry mapEntry = (Map.Entry) iterator.next();
           sendMessage((ThreadController)mapEntry.getValue(), false, false, true, maxSeenSofar, false);
         }
-        sleep(4000);
+        sleep(500);
         while (!messageQueue.isEmpty()) {
+
           MessagePassing receivedMessage = messageQueue.poll();
-          if (this.parent == null) {
-            this.parent = neighbours.get(receivedMessage.senderID);
-            sendMessage(this.parent, true, false, false, 0, true);
+
+          synchronized(this) {
+
+            if (this.parent == null) {
+              ThreadController parentContender = neighbours.get(receivedMessage.senderID);
+              if (receivedMessage.COMM) {
+                if (!nodesUnderMe.contains(parentContender.threadID)) {
+                  if (this.nodesUnderMe.size() > 0) {
+                    parentContender.nodesUnderMe.addAll(this.nodesUnderMe);
+                  }
+
+                  parentContender.nodesUnderMe.add(this.threadID);
+                  this.parent = parentContender;
+
+                  System.out.println("Parent of " + threadID + " is " + receivedMessage.senderID);
+
+                  sendMessage(this.parent, true, false, false, 0, true);
+                }
+              }
+            }
           }
+
           parseMessage(receivedMessage);
+          sleep(500);
         }
-        this.interrupt();
+        if (receivedUIDs.size() > 0) {
+          maxSeenSofar = Math.max(maxSeenSofar, Collections.max(receivedUIDs, null));
+        }
+        if (this.parent != null) {
+          sendMessage(this.parent, false, false, true, maxSeenSofar, false);
+        }
+        if (countActiveChildren() == 0) {
+          isAlive = false;
+          sendMessage(this.parent, true, true, false, 0, false);
+          if (this.parent != null) {
+            System.out.println(threadID + " terminating...parent is " + this.parent.threadID);
+          } else {
+            System.out.println(threadID + " terminating...leader is " + maxSeenSofar );
+          }
+          this.interrupt();
+        }
       }
     } catch (InterruptedException e) {
       e.getMessage();
     }
   }
    public void parseMessage(MessagePassing receivedMessage){
-       if(MessagePassing.ACK == true && MessagePassing.parent == true){
-           children.put(this.threadID,this);
-           childStatus.put(this.threadID,true);
+       if(receivedMessage.ACK == true && receivedMessage.parent == true){
+         children.put(receivedMessage.senderID, neighbours.get(receivedMessage.senderID));
+         activeChildren.put(receivedMessage.senderID,true);
        }
-       if(MessagePassing.ACK == true && MessagePassing.terminate == true){
-           children.remove(this.threadID);
-           
+       else if(receivedMessage.ACK == true && receivedMessage.terminate == true){
+         activeChildren.remove(receivedMessage.senderID);
+       } else if (receivedMessage.COMM == true && receivedMessage.maxUID > 0) {
+          receivedUIDs.add(receivedMessage.maxUID);
        }
    }
 }

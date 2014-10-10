@@ -12,6 +12,9 @@ public class FloodMaxSimulatorMain {
 
     for (int i = 0; i < threadCount; i++) {
       ThreadController t = new ThreadController(arrayIds[i]);
+      if (i == 0) {
+        t.startNode = true;
+      }
       this.Nodes.put(arrayIds[i], t);
     }
   }

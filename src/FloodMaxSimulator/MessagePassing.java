@@ -18,5 +18,6 @@ public class MessagePassing {
     this.maxUID = UID;
     this.parent = parent;
     this.senderID = senderID;
+    this.COMM = COMM;
   }
 }
