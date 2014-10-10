@@ -103,11 +103,11 @@ public class ThreadController extends Thread{
        
    //}    
    public void parseMessage(BlockingQueue<MessagePassing> messageQueue){
-       if(messageQueue.ACK == true && messageQueue.parent == true){
+       if(MessagePassing.ACK == true && MessagePassing.parent == true){
            children.put(this.threadID,this);
            childStatus.put(this.threadID,true);
        }
-       if(messageQueue.ACK == true && messageQueue.terminate == true){
+       if(MessagePassing.ACK == true && MessagePassing.terminate == true){
            children.remove(this.threadID);
            
        }
