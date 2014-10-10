@@ -37,6 +37,7 @@ public class ThreadController extends Thread{
   }
 
   public void sendMessage(ThreadController receiver, boolean ACK, boolean terminate, boolean COMM, int UID, boolean parent) {
+      System.out.println("In sendMessage()");
     MessagePassing message = new MessagePassing(ACK, terminate, COMM, UID, parent, this.threadID);
     //System.out.println("sending message to " + receiver.threadID);
     receiver.messageQueue.add(message);
@@ -44,18 +45,21 @@ public class ThreadController extends Thread{
 
   public void run() {
     try {
-      while (true) {                                                //send uid   --- children hashmap (id,obj   )
-                                                                    //hashmap childstatus (id true)
-                                                                    //ack ter 0         ;;;; every uid 0  comm=true uid set
+      while (true) {
+        System.out.println("In run()..while 1");
         sleep(4000);
         Iterator iterator = neighbours.entrySet().iterator();
         while (iterator.hasNext()) {
-          Map.Entry mapEntry = (Map.Entry) iterator.next();
-          sendMessage((ThreadController)mapEntry.getValue(), false, false, true, maxSeenSofar, false);
-        }
+            System.out.println("In run()..while 2::");
+        Map.Entry mapEntry = (Map.Entry) iterator.next();
+        System.out.print("Before sendMessage::"+(ThreadController)mapEntry.getValue());
+        sendMessage((ThreadController)mapEntry.getValue(), false, false, true, maxSeenSofar, false);
+    }
         sleep(4000);
         while (!messageQueue.isEmpty()) {
+            System.out.println("In run()..while 3:::");
           MessagePassing receivedMessage = messageQueue.poll();
+          System.out.print("Received Message:::" + receivedMessage);
           if (this.parent == null) {
             this.parent = neighbours.get(receivedMessage.senderID);
             sendMessage(this.parent, true, false, false, 0, true);
@@ -69,11 +73,18 @@ public class ThreadController extends Thread{
     }
   }
    public void parseMessage(MessagePassing receivedMessage){
-       if(MessagePassing.ACK == true && MessagePassing.parent == true){
+       System.out.println("In parseMessage():::");
+       System.out.println("receivedMessage.ACK::"+ receivedMessage.ACK);
+       System.out.println("receivedMessage.terminate::"+ receivedMessage.terminate);
+       System.out.println("receivedMessage.COMM::"+ receivedMessage.COMM);
+       System.out.println("receivedMessage.UID::"+ receivedMessage.maxUID);
+       System.out.println("receivedMessage.parent::"+ receivedMessage.parent);
+       System.out.println("receivedMessage.senderID::"+ receivedMessage.senderID);
+       if(receivedMessage.ACK == true && receivedMessage.parent == true){
            children.put(this.threadID,this);
            childStatus.put(this.threadID,true);
        }
-       if(MessagePassing.ACK == true && MessagePassing.terminate == true){
+       if(receivedMessage.ACK == true && receivedMessage.terminate == true){
            children.remove(this.threadID);
            
        }
