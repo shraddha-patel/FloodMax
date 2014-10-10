@@ -2,6 +2,9 @@
 package FloodMaxSimulator;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 /**
 *
 * @author Shraddha, Priyanka
@@ -14,7 +17,7 @@ public class ThreadController extends Thread{
   HashMap<Integer, ThreadController> neighbours = new HashMap<Integer, ThreadController>();
   ThreadController parent;
 
-  Queue<Integer> messageQueue;
+  BlockingQueue<Integer> messageQueue = new ArrayBlockingQueue<Integer>(100, true);
 
   ThreadController(int threadID) {
     this.threadID = threadID;
@@ -38,10 +41,10 @@ public class ThreadController extends Thread{
           sendMessage((ThreadController)mapEntry.getValue(), false, false, true, maxSeenSofar, false);
         }
         sleep(4000);
-//        while (!messageQueue.isEmpty()) {
-//          MessagePassing msg = messageQueue.poll();
-//          System.out.println("received " + msg.UID);
-//        }
+        while (!messageQueue.isEmpty()) {
+          int msg = messageQueue.poll();
+          System.out.println("received " + msg);
+        }
         this.interrupt();
       }
     } catch (InterruptedException e) {
