@@ -1,50 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FloodMaxSimulator;
 
-import java.util.ArrayList;
-
+import java.util.*;
 /**
- *
- * @author Shraddha
- */
+*
+* @author Shraddha, Priyanka
+*/
 public class ThreadController extends Thread{
-   int threadID;
-   int maxSeenSofar;
-   boolean startNode;
-   ThreadController parent;
-   ArrayList neighbours = new ArrayList();
-   ArrayList children = new ArrayList();
-   Map ChildStatus = new Map();
-   
-   ThreadController(int threadID) {
-       this.threadID = threadID;
-       this.maxSeenSofar = threadID;
-   }
-   
-   public void FindAllNeighbours() {
-     //return neighbours from conn array;   
-   }
-   
-   public boolean isStartNode() {
-       //return if current thread represents the start node
-   }
-   
-   public int countChildNodes() {
-       //returns a count of child nodes
-   }
-   
-   public void start() {
-       FindAllNeighbours();
-       /*
-       for each j in neighbours {
-        send message to j with UID
-       }
-       
-       */
-       
-   }
+  int threadID;
+  boolean isAlive;
+  int maxSeenSofar;
+  boolean startNode;
+  HashMap<Integer, ThreadController> neighbours = new HashMap<Integer, ThreadController>();
+  ThreadController parent;
+
+  Queue<Integer> messageQueue;
+
+  ThreadController(int threadID) {
+    this.threadID = threadID;
+    this.maxSeenSofar = threadID;
+    this.isAlive = true;
+  }
+
+  public void sendMessage(ThreadController receiver, boolean ACK, boolean terminate, boolean COMM, int UID, boolean parent) {
+    //MessagePassing message = new MessagePassing(ACK, terminate, COMM, UID, parent);
+    System.out.println("sending message to " + receiver.threadID);
+    receiver.messageQueue.add(UID);
+  }
+
+  public void run() {
+    try {
+      while (true) {
+        sleep(4000);
+        Iterator iterator = neighbours.entrySet().iterator();
+        while (iterator.hasNext()) {
+          Map.Entry mapEntry = (Map.Entry) iterator.next();
+          sendMessage((ThreadController)mapEntry.getValue(), false, false, true, maxSeenSofar, false);
+        }
+        sleep(4000);
+//        while (!messageQueue.isEmpty()) {
+//          MessagePassing msg = messageQueue.poll();
+//          System.out.println("received " + msg.UID);
+//        }
+        this.interrupt();
+      }
+    } catch (InterruptedException e) {
+      e.getMessage();
+    }
+  }
 }
