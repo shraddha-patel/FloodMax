@@ -23,6 +23,8 @@ public class ThreadController extends Thread{
   boolean startNode;
   Set uid = new HashSet();
   HashMap<Integer, ThreadController> neighbours = new HashMap<Integer, ThreadController>();
+  HashMap<Integer,Boolean> childStatus = new HashMap<Integer,Boolean>();
+  HashMap<Integer, ThreadController> children = new HashMap<Integer, ThreadController>();
   ThreadController parent;
 
   BlockingQueue<MessagePassing> messageQueue = new ArrayBlockingQueue<MessagePassing>(100, true);
@@ -42,7 +44,9 @@ public class ThreadController extends Thread{
 
   public void run() {
     try {
-      while (true) {
+      while (true) {                                                //send uid   --- children hashmap (id,obj   )
+                                                                    //hashmap childstatus (id true)
+                                                                    //ack ter 0         ;;;; every uid 0  comm=true uid set
         sleep(4000);
         Iterator iterator = neighbours.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -56,6 +60,7 @@ public class ThreadController extends Thread{
             this.parent = neighbours.get(receivedMessage.senderID);
             sendMessage(this.parent, true, false, false, 0, true);
           }
+          parseMessage(receivedMessage);
         }
         this.interrupt();
       }
@@ -63,6 +68,16 @@ public class ThreadController extends Thread{
       e.getMessage();
     }
   }
+   public void parseMessage(MessagePassing receivedMessage){
+       if(MessagePassing.ACK == true && MessagePassing.parent == true){
+           children.put(this.threadID,this);
+           childStatus.put(this.threadID,true);
+       }
+       if(MessagePassing.ACK == true && MessagePassing.terminate == true){
+           children.remove(this.threadID);
+           
+       }
+   }
 }
 
   
