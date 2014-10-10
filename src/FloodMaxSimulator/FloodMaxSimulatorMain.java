@@ -6,20 +6,6 @@ import java.util.*;
  * @author Shraddha, Priyanka
  */
 public class FloodMaxSimulatorMain {
-//<<<<<<< HEAD
-  //  public static int[][] conn =  {{0,1,1,0,0}, {1,0,1,1,0}, {1,1,0,1,1}, {0,1,1,0,1}, {0,0,1,1,0}};
- /*   public static void main(String args[]) {
-        HashMap map = new HashMap();
-   //     conn =  {{0,1,1,0,0}, {1,0,1,1,0}, {1,1,0,1,1}, {0,1,1,0,1}, {0,0,1,1,0}};
-        int[] arrayIDs = {1,2,3,4,5};
-        
-        for (int i = 1; i <= 5; i++) {
-            ThreadController t = new ThreadController(i);
-            map.put(i, t);
-            t.start();
-//=======
-        }
-    }*/
   HashMap<Integer, ThreadController> Nodes = new HashMap<Integer, ThreadController>();
 
   public FloodMaxSimulatorMain(int threadCount, int[] arrayIds, int[][] conn) {
@@ -28,8 +14,6 @@ public class FloodMaxSimulatorMain {
       ThreadController t = new ThreadController(arrayIds[i]);
       this.Nodes.put(arrayIds[i], t);
     }
-    createLinks(conn, threadCount, arrayIds);
-    Init();
   }
   public void createLinks(int[][] conn, int threadCount, int[] arrayIds) {
     for (int i = 0; i < threadCount; i++) {
@@ -39,7 +23,6 @@ public class FloodMaxSimulatorMain {
           ThreadController t2 = Nodes.get(arrayIds[j]);
           t1.neighbours.put(arrayIds[j], t2);
           t2.neighbours.put(arrayIds[i], t1);
-//>>>>>>> origin/master
         }
       }
     }
@@ -60,5 +43,7 @@ public class FloodMaxSimulatorMain {
     int[] arrayIds = {1, 2, 3, 4, 5};
     int[][] conn = {{0,1,1,0,0}, {1,0,1,1,0}, {1,1,0,1,1}, {0,1,1,0,1}, {0,0,1,1,0}};
     FloodMaxSimulatorMain floodMax = new FloodMaxSimulatorMain(threadCount, arrayIds, conn);
+    floodMax.createLinks(conn, threadCount, arrayIds);
+    floodMax.Init();
   }
 }

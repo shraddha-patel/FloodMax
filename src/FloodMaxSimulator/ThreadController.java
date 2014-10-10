@@ -26,7 +26,7 @@ public class ThreadController extends Thread{
   ThreadController parent;
 
   BlockingQueue<MessagePassing> messageQueue = new ArrayBlockingQueue<MessagePassing>(100, true);
-  BlockingQueue<MessagePassing> messageQueue1 = new ArrayBlockingQueue<MessagePassing>(100, true);
+  //BlockingQueue<MessagePassing> messageQueue1 = new ArrayBlockingQueue<MessagePassing>(100, true);
 
   ThreadController(int threadID) {
     this.threadID = threadID;
@@ -35,8 +35,8 @@ public class ThreadController extends Thread{
   }
 
   public void sendMessage(ThreadController receiver, boolean ACK, boolean terminate, boolean COMM, int UID, boolean parent) {
-    MessagePassing message = new MessagePassing(ACK, terminate, COMM, UID, parent);
-    System.out.println("sending message to " + receiver.threadID);
+    MessagePassing message = new MessagePassing(ACK, terminate, COMM, UID, parent, this.threadID);
+    //System.out.println("sending message to " + receiver.threadID);
     receiver.messageQueue.add(message);
   }
 
@@ -51,8 +51,11 @@ public class ThreadController extends Thread{
         }
         sleep(4000);
         while (!messageQueue.isEmpty()) {
-          messageQueue1 = (BlockingQueue) messageQueue.poll();
-          System.out.println("received " + messageQueue1);
+          MessagePassing receivedMessage = messageQueue.poll();
+          if (this.parent == null) {
+            this.parent = neighbours.get(receivedMessage.senderID);
+            sendMessage(this.parent, true, false, false, 0, true);
+          }
         }
         this.interrupt();
       }
@@ -60,29 +63,6 @@ public class ThreadController extends Thread{
       e.getMessage();
     }
   }
-   
-   public boolean isStartNode() {   //return if current thread represents the start node
-       return this.threadID == 1;
-   }
-   
-   public int countChildNodes() {
-        //returns a count of child nodes
-   }
-   
-   public int countActiveChildNodes() {
-       
-   }
-   
-   public void start() {
-       FindAllNeighbours();
-       /*
-       for each j in neighbours {
-        send message to j with UID
-       }
-       
-       */
-       
-   }
 }
 
   
