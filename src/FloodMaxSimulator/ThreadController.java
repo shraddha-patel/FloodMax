@@ -7,6 +7,7 @@ package FloodMaxSimulator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -37,8 +38,8 @@ public class ThreadController extends Thread  {
        }
     }
    
-   public boolean isStartNode() {
-       //return if current thread represents the start node
+   public boolean isStartNode() {   //return if current thread represents the start node
+       return this.threadID == 1;
    }
    
    public int countChildNodes() {
