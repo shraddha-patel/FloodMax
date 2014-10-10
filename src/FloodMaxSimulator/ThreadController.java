@@ -23,6 +23,8 @@ public class ThreadController extends Thread{
   boolean startNode;
   Set uid = new HashSet();
   HashMap<Integer, ThreadController> neighbours = new HashMap<Integer, ThreadController>();
+  HashMap<Integer,Boolean> childStatus = new HashMap<Integer,Boolean>();
+  HashMap<Integer, ThreadController> children = new HashMap<Integer, ThreadController>();
   ThreadController parent;
 
   BlockingQueue<MessagePassing> messageQueue = new ArrayBlockingQueue<MessagePassing>(100, true);
@@ -42,7 +44,9 @@ public class ThreadController extends Thread{
 
   public void run() {
     try {
-      while (true) {
+      while (true) {                                                //send uid   --- children hashmap (id,obj   )
+                                                                    //hashmap childstatus (id true)
+                                                                    //ack ter 0         ;;;; every uid 0  comm=true uid set
         sleep(4000);
         Iterator iterator = neighbours.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -53,6 +57,21 @@ public class ThreadController extends Thread{
         while (!messageQueue.isEmpty()) {
           messageQueue1 = (BlockingQueue) messageQueue.poll();
           System.out.println("received " + messageQueue1);
+         
+            parseMessage(messageQueue1);    
+     /*       Object[] queueArray = messageQueue.toArray();
+            Object isACK = queueArray[0];
+            Object isterminate = queueArray[1];
+            Object isCOMM = queueArray[2];
+            Object UID = queueArray[3];
+            Object isParent = queueArray[4];
+            if(isACK == "true" && isParent == "true"){
+                
+            }
+            if(isACK == "true" && isterminate == "true"){
+                children.remove(this.threadID);
+            }
+            if(isCOMM == "true")        */
         }
         this.interrupt();
       }
@@ -65,15 +84,15 @@ public class ThreadController extends Thread{
        return this.threadID == 1;
    }
    
-   public int countChildNodes() {
+  /* public int countChildNodes() {
         //returns a count of child nodes
    }
    
    public int countActiveChildNodes() {
        
-   }
+   }    */
    
-   public void start() {
+  /* public void start() {
        FindAllNeighbours();
        /*
        for each j in neighbours {
@@ -82,6 +101,16 @@ public class ThreadController extends Thread{
        
        */
        
+   //}    
+   public void parseMessage(BlockingQueue<MessagePassing> messageQueue){
+       if(messageQueue.ACK == true && messageQueue.parent == true){
+           children.put(this.threadID,this);
+           childStatus.put(this.threadID,true);
+       }
+       if(messageQueue.ACK == true && messageQueue.terminate == true){
+           children.remove(this.threadID);
+           
+       }
    }
 }
 
