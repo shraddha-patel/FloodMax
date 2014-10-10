@@ -10,5 +10,17 @@ package FloodMaxSimulator;
  * @author Shraddha
  */
 public class MessagePassing {
+    boolean ACK;
+    boolean MSG;
+    boolean terminationRequest;
+    int UID;
+    int parentID;
+    boolean notParent;
     
+    public void sendMessage() {
+        
+    }
+    public void receiveMessage() {
+        
+    }
 }
