@@ -1,26 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FloodMaxSimulator;
 
 /**
  *
- * @author Shraddha
+ * @author Shraddha, Priyanka
  */
 public class MessagePassing {
-    boolean ACK;
-    boolean MSG;
-    boolean terminationRequest;
-    int UID;
-    int parentID;
-    boolean notParent;
-    
-    public void sendMessage() {
-        
-    }
-    public void receiveMessage() {
-        
-    }
+  boolean ACK;
+  boolean COMM;
+  boolean terminate;
+  int UID;
+  boolean parent;
+
+  MessagePassing(boolean ACK, boolean terminate, boolean COMM, int UID, boolean parent) {
+    this.ACK = ACK;
+    this.terminate = terminate;
+    this.UID = UID;
+    this.parent = parent;
+  }
 }
