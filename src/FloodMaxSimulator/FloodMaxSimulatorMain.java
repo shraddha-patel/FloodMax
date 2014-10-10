@@ -1,5 +1,10 @@
 package FloodMaxSimulator;
+
+import java.io.FileReader;
+import java.io.StreamTokenizer;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -26,6 +31,7 @@ public class FloodMaxSimulatorMain {
           ThreadController t2 = Nodes.get(arrayIds[j]);
           t1.neighbours.put(arrayIds[j], t2);
           t2.neighbours.put(arrayIds[i], t1);
+          System.out.println("Creating link between threads "+ (i+1) +"and "+ (j+1));
         }
       }
     }
@@ -41,10 +47,43 @@ public class FloodMaxSimulatorMain {
     }
 
   }
+ 
   public static void main(String args[]) {
-    int threadCount = 5;
-    int[] arrayIds = {1, 2, 3, 4, 5};
-    int[][] conn = {{0,1,1,0,0}, {1,0,1,1,0}, {1,1,0,1,1}, {0,1,1,0,1}, {0,0,1,1,0}};
+      int threadCount = 0;
+      int[] arrayIds = null;
+      int[][] conn = null;
+     
+      try{
+            StreamTokenizer tokenizer = new StreamTokenizer(new FileReader("Input-File.txt"));
+            tokenizer.slashSlashComments(true);
+            tokenizer.eolIsSignificant(false);
+            tokenizer.nextToken();
+            threadCount = (int)tokenizer.nval;
+            arrayIds = new int[threadCount+1];
+            conn = new int[threadCount+1][threadCount+1];
+         //   System.out.println("Thread Count::"+threadCount);
+            for(int i=1;i<=threadCount;i++){
+                tokenizer.nextToken();
+                if (tokenizer.ttype == StreamTokenizer.TT_NUMBER){
+                //    System.out.println("In if::"+(int)tokenizer.nval);
+                    arrayIds[i] = (int)tokenizer.nval;
+                //    System.out.println("ArrayID::"+arrayIds[i]);
+                }
+            }
+            for(int i=1;i<=threadCount;i++){
+                for(int j=1;j<=threadCount;j++){
+                    tokenizer.nextToken();
+                    if (tokenizer.ttype == StreamTokenizer.TT_NUMBER){
+                        System.out.println("In if::"+(int)tokenizer.nval);
+                        conn[i][j] = (int)tokenizer.nval;
+                        System.out.println("Conn::"+conn[i][j]);
+                    }
+                }
+            }
+      }catch(Exception e){
+          System.out.println("Exception::" +e);
+    }
+   
     FloodMaxSimulatorMain floodMax = new FloodMaxSimulatorMain(threadCount, arrayIds, conn);
     floodMax.createLinks(conn, threadCount, arrayIds);
     floodMax.Init();

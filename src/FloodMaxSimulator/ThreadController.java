@@ -82,7 +82,6 @@ public class ThreadController extends Thread{
               }
             }
           }
-
           parseMessage(receivedMessage);
           sleep(500);
         }
