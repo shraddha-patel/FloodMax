@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e4c7278-ffa5-4077-9906-a468ca0526d0" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FloodMaxSimulator/FloodMaxSimulatorMain.java" afterPath="$PROJECT_DIR$/src/FloodMaxSimulator/FloodMaxSimulatorMain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FloodMaxSimulator/MessagePassing.java" afterPath="$PROJECT_DIR$/src/FloodMaxSimulator/MessagePassing.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FloodMaxSimulator/ThreadController.java" afterPath="$PROJECT_DIR$/src/FloodMaxSimulator/ThreadController.java" />
     </list>
     <ignored path="DC.iws" />
@@ -66,12 +69,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FloodMaxSimulatorMain.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="FloodMaxSimulatorMain.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/FloodMaxSimulatorMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="22" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0" vertical-offset="250" max-vertical-offset="870">
+            <state line="43" column="22" selection-start="1238" selection-end="1238" vertical-scroll-proportion="0.5208845" vertical-offset="433" max-vertical-offset="840">
               <folding>
-                <element signature="e#359#386#0" expanded="true" />
+                <element signature="e#183#210#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,20 +83,20 @@
       <file leaf-file-name="MessagePassing.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/MessagePassing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+            <state line="6" column="29" selection-start="98" selection-end="98" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreadController.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ThreadController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/ThreadController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="0" selection-start="847" selection-end="847" vertical-scroll-proportion="0.7051597" vertical-offset="148" max-vertical-offset="900">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="900">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#362#389#0" expanded="true" />
-                <element signature="e#483#492#0" expanded="true" />
+                <element signature="e#363#390#0" expanded="true" />
+                <element signature="e#484#493#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,9 +124,9 @@
         <option value="$PROJECT_DIR$/src/FloodMaxSimulator/ThreadUtil.java" />
         <option value="$PROJECT_DIR$/src/FloodMaxSimulator/Processes.java" />
         <option value="$PROJECT_DIR$/src/FloodMaxSimulator/Connections.java" />
+        <option value="$PROJECT_DIR$/src/FloodMaxSimulator/ThreadController.java" />
         <option value="$PROJECT_DIR$/src/FloodMaxSimulator/MessagePassing.java" />
         <option value="$PROJECT_DIR$/src/FloodMaxSimulator/FloodMaxSimulatorMain.java" />
-        <option value="$PROJECT_DIR$/src/FloodMaxSimulator/ThreadController.java" />
       </list>
     </option>
   </component>
@@ -494,7 +497,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="0" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="420">
           <folding>
-            <element signature="e#359#386#0" expanded="true" />
+            <element signature="e#183#210#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -511,8 +514,8 @@
         <state line="4" column="3" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="840">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#362#389#0" expanded="true" />
-            <element signature="e#483#492#0" expanded="true" />
+            <element signature="e#363#390#0" expanded="true" />
+            <element signature="e#484#493#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -521,7 +524,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="0" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="420">
           <folding>
-            <element signature="e#359#386#0" expanded="true" />
+            <element signature="e#183#210#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -538,8 +541,8 @@
         <state line="4" column="3" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="840">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#362#389#0" expanded="true" />
-            <element signature="e#483#492#0" expanded="true" />
+            <element signature="e#363#390#0" expanded="true" />
+            <element signature="e#484#493#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -548,7 +551,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="54" selection-start="614" selection-end="614" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="420">
           <folding>
-            <element signature="e#359#386#0" expanded="true" />
+            <element signature="e#183#210#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -565,8 +568,8 @@
         <state line="4" column="3" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="840">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#362#389#0" expanded="true" />
-            <element signature="e#483#492#0" expanded="true" />
+            <element signature="e#363#390#0" expanded="true" />
+            <element signature="e#484#493#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -578,29 +581,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/FloodMaxSimulatorMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="22" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0" vertical-offset="250" max-vertical-offset="870">
-          <folding>
-            <element signature="e#359#386#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/MessagePassing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+        <state line="6" column="29" selection-start="98" selection-end="98" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/ThreadController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="847" selection-end="847" vertical-scroll-proportion="0.7051597" vertical-offset="148" max-vertical-offset="900">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="900">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#362#389#0" expanded="true" />
-            <element signature="e#483#492#0" expanded="true" />
+            <element signature="e#363#390#0" expanded="true" />
+            <element signature="e#484#493#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FloodMaxSimulator/FloodMaxSimulatorMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="22" selection-start="1238" selection-end="1238" vertical-scroll-proportion="0.5208845" vertical-offset="433" max-vertical-offset="840">
+          <folding>
+            <element signature="e#183#210#0" expanded="true" />
           </folding>
         </state>
       </provider>
