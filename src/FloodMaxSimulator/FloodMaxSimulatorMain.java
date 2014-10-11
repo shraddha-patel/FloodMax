@@ -41,9 +41,8 @@ public class FloodMaxSimulatorMain {
         thread.start();
       }
     } catch (Exception e) {
-        System.out.println("Exception Raised");
+        System.out.println("Exception Raised.."+e);
     }
-
   }
  
   public static void main(String args[]) {
@@ -59,22 +58,18 @@ public class FloodMaxSimulatorMain {
             threadCount = (int)tokenizer.nval;
             arrayIds = new int[threadCount];
             conn = new int[threadCount][threadCount];
-         //   System.out.println("Thread Count::"+threadCount);
+         
             for(int i=0;i<threadCount;i++){
                 tokenizer.nextToken();
                 if (tokenizer.ttype == StreamTokenizer.TT_NUMBER){
-                //    System.out.println("In if::"+(int)tokenizer.nval);
                     arrayIds[i] = (int)tokenizer.nval;
-                //    System.out.println("ArrayID::"+arrayIds[i]);
                 }
             }
             for(int i=0;i<threadCount;i++){
                 for(int j=0;j<threadCount;j++){
                     tokenizer.nextToken();
                     if (tokenizer.ttype == StreamTokenizer.TT_NUMBER){
-                 //       System.out.println("In if::"+(int)tokenizer.nval);
                         conn[i][j] = (int)tokenizer.nval;
-                 //       System.out.println("Conn::"+conn[i][j]);
                     }
                 }
             }

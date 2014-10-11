@@ -1,12 +1,8 @@
 
 package FloodMaxSimulator;
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
-
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -22,7 +18,7 @@ public class ThreadController extends Thread{
   int maxSeenSofar;
   boolean startNode;
   int leader;
- private Object lock = new Object();
+ 
   Set<Integer> nodesUnderMe = Collections.synchronizedSet(new HashSet<Integer>(100));
   Set<Integer> receivedUIDs = new HashSet<Integer>(100);
   HashMap<Integer, ThreadController> neighbours = new HashMap<Integer, ThreadController>();
@@ -30,7 +26,7 @@ public class ThreadController extends Thread{
   HashMap<Integer, ThreadController> children = new HashMap<Integer, ThreadController>();
   ThreadController parent;
 
-  BlockingQueue<MessagePassing> messageQueue = new ArrayBlockingQueue<MessagePassing>(100, true);
+  BlockingQueue<MessagePassing> messageQueue = new ArrayBlockingQueue<MessagePassing>(1000, true);
 
   ThreadController(int threadID) {
     this.threadID = threadID;
@@ -39,7 +35,6 @@ public class ThreadController extends Thread{
   }
 
   public void sendMessage(ThreadController receiver, boolean ACK, boolean terminate, boolean COMM, int UID, boolean parent) {
-    //System.out.println("sending " + UID + " to " + receiver.threadID);
     MessagePassing message = new MessagePassing(ACK, terminate, COMM, UID, parent, this.threadID);
     receiver.messageQueue.add(message);
   }
@@ -68,16 +63,13 @@ public class ThreadController extends Thread{
               ThreadController parentContender = neighbours.get(receivedMessage.senderID);
               if (receivedMessage.COMM) {
                 if (!nodesUnderMe.contains(parentContender.threadID)) {
-                  if (this.nodesUnderMe.size() > 0) {
-                    parentContender.nodesUnderMe.addAll(this.nodesUnderMe);
-                  }
-
-                  parentContender.nodesUnderMe.add(this.threadID);
-                  this.parent = parentContender;
-
-                  System.out.println("Parent of " + threadID + " is " + receivedMessage.senderID);
-
-                  sendMessage(this.parent, true, false, false, 0, true);
+                    if (this.nodesUnderMe.size() > 0) {
+                        parentContender.nodesUnderMe.addAll(this.nodesUnderMe);
+                    }
+                    parentContender.nodesUnderMe.add(this.threadID);
+                    this.parent = parentContender;
+                    System.out.println("Parent of " + threadID + " is " + receivedMessage.senderID);
+                    sendMessage(this.parent, true, false, false, 0, true);
                 }
               }
             }
