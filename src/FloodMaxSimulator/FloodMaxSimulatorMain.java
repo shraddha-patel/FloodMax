@@ -3,8 +3,6 @@ package FloodMaxSimulator;
 import java.io.FileReader;
 import java.io.StreamTokenizer;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -59,10 +57,10 @@ public class FloodMaxSimulatorMain {
             tokenizer.eolIsSignificant(false);
             tokenizer.nextToken();
             threadCount = (int)tokenizer.nval;
-            arrayIds = new int[threadCount+1];
-            conn = new int[threadCount+1][threadCount+1];
+            arrayIds = new int[threadCount];
+            conn = new int[threadCount][threadCount];
          //   System.out.println("Thread Count::"+threadCount);
-            for(int i=1;i<=threadCount;i++){
+            for(int i=0;i<threadCount;i++){
                 tokenizer.nextToken();
                 if (tokenizer.ttype == StreamTokenizer.TT_NUMBER){
                 //    System.out.println("In if::"+(int)tokenizer.nval);
@@ -70,13 +68,13 @@ public class FloodMaxSimulatorMain {
                 //    System.out.println("ArrayID::"+arrayIds[i]);
                 }
             }
-            for(int i=1;i<=threadCount;i++){
-                for(int j=1;j<=threadCount;j++){
+            for(int i=0;i<threadCount;i++){
+                for(int j=0;j<threadCount;j++){
                     tokenizer.nextToken();
                     if (tokenizer.ttype == StreamTokenizer.TT_NUMBER){
-                        System.out.println("In if::"+(int)tokenizer.nval);
+                 //       System.out.println("In if::"+(int)tokenizer.nval);
                         conn[i][j] = (int)tokenizer.nval;
-                        System.out.println("Conn::"+conn[i][j]);
+                 //       System.out.println("Conn::"+conn[i][j]);
                     }
                 }
             }
